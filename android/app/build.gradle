@@ -1,7 +1,8 @@
 apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
 
-import com.android.build.OutputFile
-import org.apache.tools.ant.taskdefs.condition.Os
+// import com.android.build.OutputFile
+// import org.apache.tools.ant.taskdefs.condition.Os
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -134,6 +135,15 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaVersion
+        targetCompatibility rootProject.ext.javaVersion
+    }
+
+    kotlinOptions {
+        jvmTarget = rootProject.ext.javaVersion.toString()
+    }
+
     defaultConfig {
         applicationId "com.ocrscanner"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -161,9 +171,10 @@ android {
                     // src/main/jni/Android.mk file for the `LOCAL_MODULE` variable.
                     targets "ocrscanner_appmodules"
                     // Fix for windows limit on number of character in file paths and in command lines
-                    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                        arguments "NDK_APP_SHORT_COMMANDS=true"
-                    }
+                    // Disabled Os check since import is commented out
+                    // if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                    //     arguments "NDK_APP_SHORT_COMMANDS=true"
+                    // }
                 }
             }
             if (!enableSeparateBuildPerCPUArchitecture) {
@@ -251,12 +262,12 @@ android {
             // https://developer.android.com/studio/build/configure-apk-splits.html
             // Example: versionCode 1 will generate 1001 for armeabi-v7a, 1002 for x86, etc.
             def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
-            def abi = output.getFilter(OutputFile.ABI)
+            // OutputFile class is deprecated, using a different approach
+            def abi = output.getFilter("ABI")
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
                         defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
-
         }
     }
 }
@@ -266,8 +277,11 @@ dependencies {
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-screens')  // Explicit dependency on react-native-screens
+    implementation project(':react-native-safe-area-context')  // Explicit dependency on react-native-safe-area-context
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation "androidx.multidex:multidex:2.0.1"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
