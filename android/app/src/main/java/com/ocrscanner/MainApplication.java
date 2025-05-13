@@ -8,7 +8,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
-import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
+// import com.th3rdwave.safeareacontext.SafeAreaContextPackage; // Removed as it's auto-linked
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.ocrscanner.newarchitecture.MainApplicationReactNativeHost;
@@ -30,7 +30,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           packages.add(new RNScreensPackage());
-          packages.add(new SafeAreaContextPackage());
+          // packages.add(new SafeAreaContextPackage()); // Removed as it's auto-linked
           return packages;
         }
 

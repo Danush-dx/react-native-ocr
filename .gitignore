@@ -4,7 +4,7 @@
 
 # Xcode
 #
-build/
+/ios/build/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -23,7 +23,9 @@ DerivedData
 
 # Android/IntelliJ
 #
-build/
+/android/build/
+/android/app/build/
+/android/app/.cxx/
 .idea
 .gradle
 local.properties
@@ -59,3 +61,15 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+# Environment variables
+.env
+.env.*
+
+# Log files
+*.log
+logs
+*.log.*
+
+# VS Code
+.vscode/
